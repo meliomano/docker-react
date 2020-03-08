@@ -9,3 +9,18 @@ before_install:
 script:
   - docker run -e CI=true meliomano/docker-react npm run test
   #- docker run meliomano/docker-react npm run test -- -coverage
+
+# Deployment configuration for AWS
+deploy:
+  # Uncomment if we get a missing bucket_name error with a failed build
+#  edge: true
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-2-113368344835"
+  bucket_path: "docker-react"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
